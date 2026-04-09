@@ -70,7 +70,7 @@ export default function Courses() {
       type: "LIVE CLASSES",
       desc: "Master cinematic FX, pyro, water and destruction with live mentorship.",
       price: "₹44,999",
-      link: isHoudiniEnrolled ? "/courses/houdini" : "/courses/houdini-animation",
+      link: isHoudiniEnrolled ? "/course/houdini-animation" : "/courses/houdini-animation",
       video: "/videos/all.mp4",
       highlight: true,
       courseId: "houdini",

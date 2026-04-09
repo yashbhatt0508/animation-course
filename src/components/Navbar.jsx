@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { PlayCircle, Menu, X, User, Lock, Eye, EyeOff } from 'lucide-react';
+import { Menu, X, User, Lock, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -65,14 +65,15 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link to="/" className="flex items-center gap-3 cursor-pointer">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0">
               <motion.div
                 whileHover={{ rotate: 90 }}
                 transition={{ duration: 0.3 }}
+                className="flex-shrink-0"
               >
-                <PlayCircle className="w-8 h-8 text-blue-500" />
+                <img src="/public/logonew.png" alt="Creative India School" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12" />
               </motion.div>
-              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500">
+              <span className="text-sm sm:text-lg md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500 truncate">
                 Creative India School
               </span>
             </Link>
@@ -248,4 +249,3 @@ export default function Navbar() {
     </>
   );
 }
-

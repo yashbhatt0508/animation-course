@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef } from 'react';
-import { PlayCircle, Globe, MessageCircle, Share2 } from 'lucide-react';
+import { Globe, MessageCircle, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -40,7 +40,7 @@ export default function Footer() {
           {/* BRAND */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <PlayCircle className="w-5 h-5 text-blue-500" />
+              <img src="/public/logonew.png" alt="Creative India School" className="w-12 h-12" />
               <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500">
                 Creative India School
               </span>

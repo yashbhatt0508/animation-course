@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Lock } from "lucide-react";
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,7 +14,6 @@ export default function BlenderCourse() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate cards on scroll
       gsap.fromTo(
         ".card-item",
         { y: 80, opacity: 0 },
@@ -31,7 +30,6 @@ export default function BlenderCourse() {
         }
       );
 
-      // Animate sections
       gsap.utils.toArray(".fade-section").forEach((section) => {
         gsap.fromTo(
           section,
@@ -78,30 +76,40 @@ export default function BlenderCourse() {
 
   return (
     <div ref={containerRef} className="bg-slate-950 text-white min-h-screen">
-      {/* IF NOT ENROLLED: SHOW PUBLIC LANDING PAGE */}
+      {/* COMING SOON BANNER */}
+      <div className="fixed top-20 left-0 right-0 z-40 bg-gradient-to-r from-amber-500/90 to-orange-500/90 backdrop-blur-sm py-3 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-center">
+          <Lock className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+          <p className="text-sm sm:text-base font-semibold">🚀 Coming Soon - This course will be available shortly</p>
+        </div>
+      </div>
+
+      {/* SPACER FOR BANNER */}
+      <div className="h-14 sm:h-16" />
+
       {!isEnrolled && (
         <>
           {/* LANDING HERO */}
-          <section className="relative py-24 px-6 md:px-12 lg:px-24 overflow-hidden min-h-[80vh] flex items-center">
+          <section className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden min-h-screen sm:min-h-[70vh] flex items-center">
             <div className="absolute inset-0 bg-gradient-to-b from-violet-500/10 to-transparent opacity-40 pointer-events-none" />
             
-            <div className="max-w-4xl mx-auto relative z-10 text-center">
+            <div className="max-w-4xl mx-auto relative z-10 text-center w-full">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+                <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
                   Master After Effects
                 </h1>
                 
-                <p className="text-xl text-slate-300 mb-8">
+                <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-6 sm:mb-8 px-2">
                   Learn professional motion graphics and compositing techniques used in blockbuster films and high-end advertising agencies worldwide.
                 </p>
 
-                <div className="mb-12 space-y-4">
-                  <h3 className="text-2xl font-bold">What's Included:</h3>
-                  <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                <div className="mb-8 sm:mb-12 space-y-3 sm:space-y-4 px-2">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold">What's Included:</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 max-w-2xl mx-auto text-sm sm:text-base">
                     <div className="text-left">✓ 50+ Video Lessons</div>
                     <div className="text-left">✓ Professional Projects</div>
                     <div className="text-left">✓ Motion Graphics Focus</div>
@@ -109,148 +117,241 @@ export default function BlenderCourse() {
                   </div>
                 </div>
 
-                <Link
-                  to="/enroll"
-                  className="inline-flex items-center gap-2 px-10 py-5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-lg"
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  disabled
+                  className="inline-flex items-center gap-2 px-6 sm:px-10 py-3 sm:py-5 bg-slate-700 text-slate-400 rounded-xl font-bold text-sm sm:text-base transition-all cursor-not-allowed opacity-60"
                 >
-                  Enroll Now to Access Full Course <ChevronRight className="w-5 h-5" />
-                </Link>
+                  Coming Soon <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                </motion.button>
               </motion.div>
+            </div>
+          </section>
+
+          {/* WHAT YOU WILL LEARN */}
+          <section className="fade-section py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-transparent to-violet-500/5">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16">
+                What You Will Learn
+              </h2>
+
+              <div className="cards-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                {learningTopics.map((topic, i) => (
+                  <motion.div
+                    key={i}
+                    whileHover={{ scale: 1.05 }}
+                    className="card-item p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/5 border border-violet-500/20 backdrop-blur-lg hover:border-violet-500/50 transition-all duration-300"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-1 h-1 rounded-full bg-violet-500 mt-2 flex-shrink-0" />
+                      <p className="text-sm sm:text-base md:text-lg font-semibold text-white">{topic}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* COURSE HIGHLIGHTS */}
+          <section className="fade-section py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16">
+                Course Highlights
+              </h2>
+
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+                {highlights.map((highlight, i) => (
+                  <motion.div
+                    key={i}
+                    whileHover={{ y: -10 }}
+                    className="card-item p-3 sm:p-6 rounded-lg sm:rounded-2xl bg-white/5 border border-white/10 backdrop-blur-lg hover:bg-white/10 transition-all duration-300 text-center"
+                  >
+                    <p className="text-xs sm:text-sm text-slate-400 mb-2">{highlight.label}</p>
+                    <p className="text-lg sm:text-2xl md:text-3xl font-bold text-violet-400">{highlight.value}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* WHO IS THIS FOR */}
+          <section className="fade-section py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-white/5">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16">
+                Who Is This For?
+              </h2>
+
+              <div className="max-w-3xl mx-auto">
+                <div className="cards-container space-y-3 sm:space-y-4">
+                  {forWhom.map((item, i) => (
+                    <motion.div
+                      key={i}
+                      whileHover={{ x: 10 }}
+                      className="card-item p-4 sm:p-6 rounded-lg sm:rounded-xl bg-gradient-to-r from-violet-500/10 to-transparent border border-violet-500/20 backdrop-blur-lg hover:border-violet-500/50 transition-all duration-300 flex items-center gap-4"
+                    >
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-violet-500 flex-shrink-0" />
+                      <p className="text-sm sm:text-base md:text-lg text-white">{item}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FINAL CTA */}
+          <section className="fade-section py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-transparent to-violet-500/10">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+                Ready to Master Motion Graphics?
+              </h2>
+
+              <p className="text-sm sm:text-base md:text-xl text-slate-300 mb-8 sm:mb-12 px-2">
+                Get access to comprehensive video lessons, project files, and professional resources to accelerate your learning.
+              </p>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                disabled
+                className="inline-flex items-center gap-2 px-6 sm:px-10 py-3 sm:py-5 bg-slate-700 text-slate-400 rounded-xl font-bold text-sm sm:text-base transition-all cursor-not-allowed opacity-60"
+              >
+                Coming Soon <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </motion.button>
             </div>
           </section>
         </>
       )}
 
-      {/* IF ENROLLED: SHOW FULL COURSE CONTENT */}
       {isEnrolled && (
         <>
-          <section className="relative py-24 px-6 md:px-12 lg:px-24 overflow-hidden">
+          <section className="relative py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-violet-500/10 to-transparent opacity-40 pointer-events-none" />
             
             <div className="max-w-7xl mx-auto relative z-10">
               <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <div className="inline-block mb-6">
-              <span className="text-sm font-bold px-4 py-2 rounded-full bg-indigo-500/20 text-indigo-400">
-                📹 RECORDED
-              </span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-4 tracking-tight">
-              After Effects Mastery
-            </h1>
-            
-            <p className="text-xl md:text-2xl font-bold bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent mb-8">
-              Motion. Composition. Magic.
-            </p>
-            
-            <p className="text-slate-300 max-w-3xl mx-auto text-lg mb-10">
-              Learn professional motion graphics and compositing from industry experts. Create stunning animations and visual effects that will set your portfolio apart.
-            </p>
-
-            <Link
-              to="/enroll"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-lg"
-            >
-              Enroll Now <ChevronRight className="w-5 h-5" />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* WHAT YOU WILL LEARN */}
-      <section className="fade-section py-20 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-transparent to-violet-500/5">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            What You Will Learn
-          </h2>
-
-          <div className="cards-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {learningTopics.map((topic, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.05 }}
-                className="card-item p-6 rounded-2xl bg-white/5 border border-violet-500/20 backdrop-blur-lg hover:border-violet-500/50 transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-center mb-8 sm:mb-12"
               >
-                <div className="flex items-start gap-3">
-                  <div className="w-1 h-1 rounded-full bg-violet-500 mt-2 flex-shrink-0" />
-                  <p className="text-lg font-semibold text-white">{topic}</p>
+                <div className="inline-block mb-4 sm:mb-6">
+                  <span className="text-xs sm:text-sm font-bold px-3 sm:px-4 py-2 rounded-full bg-indigo-500/20 text-indigo-400">
+                    📹 RECORDED
+                  </span>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+                
+                <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-3 sm:mb-4 tracking-tight px-2">
+                  After Effects Mastery
+                </h1>
+                
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent mb-6 sm:mb-8 px-2">
+                  Motion. Composition. Magic.
+                </p>
+                
+                <p className="text-slate-300 max-w-3xl mx-auto text-sm sm:text-base md:text-lg mb-8 sm:mb-10 px-2">
+                  Learn professional motion graphics and compositing from industry experts. Create stunning animations and visual effects that will set your portfolio apart.
+                </p>
 
-      {/* COURSE HIGHLIGHTS */}
-      <section className="fade-section py-20 px-6 md:px-12 lg:px-24">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            Course Highlights
-          </h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {highlights.map((highlight, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ y: -10 }}
-                className="card-item p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-lg hover:bg-white/10 transition-all duration-300 text-center"
-              >
-                <p className="text-sm text-slate-400 mb-2">{highlight.label}</p>
-                <p className="text-2xl md:text-3xl font-bold text-violet-400">{highlight.value}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHO IS THIS FOR */}
-      <section className="fade-section py-20 px-6 md:px-12 lg:px-24 bg-white/5">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            Who Is This For?
-          </h2>
-
-          <div className="max-w-3xl mx-auto">
-            <div className="cards-container space-y-4">
-              {forWhom.map((item, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ x: 10 }}
-                  className="card-item p-6 rounded-xl bg-gradient-to-r from-violet-500/10 to-transparent border border-violet-500/20 backdrop-blur-lg hover:border-violet-500/50 transition-all duration-300 flex items-center gap-4"
+                <Link
+                  to="/enroll"
+                  className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-violet-600 hover:bg-violet-500 text-white rounded-lg sm:rounded-xl font-bold text-sm sm:text-base transition-all hover:scale-105 shadow-lg"
                 >
-                  <div className="w-3 h-3 rounded-full bg-violet-500 flex-shrink-0" />
-                  <p className="text-lg text-white">{item}</p>
-                </motion.div>
-              ))}
+                  Enroll Now <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                </Link>
+              </motion.div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* FINAL CTA */}
-      <section className="fade-section py-24 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-transparent to-violet-500/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
-            Ready to Master Motion Graphics?
-          </h2>
+          {/* WHAT YOU WILL LEARN */}
+          <section className="fade-section py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-transparent to-violet-500/5">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16">
+                What You Will Learn
+              </h2>
 
-          <p className="text-xl text-slate-300 mb-12">
-            Get access to comprehensive video lessons, project files, and professional resources to accelerate your learning.
-          </p>
+              <div className="cards-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                {learningTopics.map((topic, i) => (
+                  <motion.div
+                    key={i}
+                    whileHover={{ scale: 1.05 }}
+                    className="card-item p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white/5 border border-violet-500/20 backdrop-blur-lg hover:border-violet-500/50 transition-all duration-300"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-1 h-1 rounded-full bg-violet-500 mt-2 flex-shrink-0" />
+                      <p className="text-sm sm:text-base md:text-lg font-semibold text-white">{topic}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
 
-          <Link
-            to="/enroll"
-            className="inline-flex items-center gap-2 px-10 py-5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-lg"
-          >
-            Enroll Now <ChevronRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </section>
+          {/* COURSE HIGHLIGHTS */}
+          <section className="fade-section py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16">
+                Course Highlights
+              </h2>
+
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+                {highlights.map((highlight, i) => (
+                  <motion.div
+                    key={i}
+                    whileHover={{ y: -10 }}
+                    className="card-item p-3 sm:p-6 rounded-lg sm:rounded-2xl bg-white/5 border border-white/10 backdrop-blur-lg hover:bg-white/10 transition-all duration-300 text-center"
+                  >
+                    <p className="text-xs sm:text-sm text-slate-400 mb-2">{highlight.label}</p>
+                    <p className="text-lg sm:text-2xl md:text-3xl font-bold text-violet-400">{highlight.value}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* WHO IS THIS FOR */}
+          <section className="fade-section py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-white/5">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16">
+                Who Is This For?
+              </h2>
+
+              <div className="max-w-3xl mx-auto">
+                <div className="cards-container space-y-3 sm:space-y-4">
+                  {forWhom.map((item, i) => (
+                    <motion.div
+                      key={i}
+                      whileHover={{ x: 10 }}
+                      className="card-item p-4 sm:p-6 rounded-lg sm:rounded-xl bg-gradient-to-r from-violet-500/10 to-transparent border border-violet-500/20 backdrop-blur-lg hover:border-violet-500/50 transition-all duration-300 flex items-center gap-4"
+                    >
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-violet-500 flex-shrink-0" />
+                      <p className="text-sm sm:text-base md:text-lg text-white">{item}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FINAL CTA */}
+          <section className="fade-section py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-transparent to-violet-500/10">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 px-2">
+                Ready to Master Motion Graphics?
+              </h2>
+
+              <p className="text-sm sm:text-base md:text-xl text-slate-300 mb-8 sm:mb-12 px-2">
+                Get access to comprehensive video lessons, project files, and professional resources to accelerate your learning.
+              </p>
+
+              <Link
+                to="/enroll"
+                className="inline-flex items-center gap-2 px-6 sm:px-10 py-3 sm:py-5 bg-violet-600 hover:bg-violet-500 text-white rounded-lg sm:rounded-xl font-bold text-sm sm:text-base transition-all hover:scale-105 shadow-lg"
+              >
+                Enroll Now <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </Link>
+            </div>
+          </section>
         </>
       )}
     </div>
