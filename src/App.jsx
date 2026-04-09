@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -20,6 +21,9 @@ import NukeCourse from './pages/NukeCourse'
 import UnrealCourse from './pages/UnrealCourse'
 import Contact from './components/Contact'
 import FAQ from './pages/FAQ'
+import EnrollmentProvider from './context/EnrollmentContext'
+
+
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -94,8 +98,11 @@ function MainApp() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <MainApp />
-    </BrowserRouter>
+    <EnrollmentProvider>
+      <BrowserRouter>
+        <MainApp />
+      </BrowserRouter>
+    </EnrollmentProvider>
   );
 }
+

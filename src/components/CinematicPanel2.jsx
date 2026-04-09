@@ -27,8 +27,11 @@ export default function CinematicPanel() {
                 }}
             /> */}
 
-            {/* 🌑 LIGHT OVERLAY (for readability only) */}
-            {/* <div className="absolute inset-0 bg-black/30 z-[2]" /> */}
+
+                        {/* 🔥 PREMIUM OVERLAY */}
+<div className="absolute inset-0 z-[1] 
+  bg-gradient-to-b from-black/20 via-black/40 to-black/80
+" />
 
             {/* 🎯 CONTENT */}
             <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 py-8 sm:py-12">
@@ -37,7 +40,7 @@ export default function CinematicPanel() {
                     No Theory. Only Real Simulations.
                 </h2>
 
-                <p className="max-w-xl text-gray-300 mb-4 sm:mb-6 text-xs sm:text-sm md:text-base lg:text-lg px-2">
+                <p className="max-w-xl text-gray-300 mb-4 sm:mb-6 font-medium text-xs sm:text-sm md:text-base lg:text-lg px-2">
                     Skip the boring theory — start building real fire, water, and destruction systems used in professional VFX workflows.
                 </p>
 

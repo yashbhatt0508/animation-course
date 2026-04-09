@@ -57,19 +57,10 @@ export default function HeroSection() {
         preload="none"
         className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-100"
       />
-      {/* 🌑 DARK OVERLAY */}
-      {/* <div className="absolute inset-0 z-[1]" */}
-      {/* style={{
-        background: `
-      linear-gradient(
-        to bottom,
-        rgba(10,10,15,0.3) 0%,
-        rgba(10,10,15,0.5) 60%,
-        rgba(10,10,15,0.75) 100%
-      )
-    `
-      }}
-      /> */}
+                              {/* 🔥 PREMIUM OVERLAY */}
+<div className="absolute inset-0 z-[1] 
+  bg-gradient-to-b from-black/70 via-black/50 to-black/80
+" />
       {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/20 rounded-full blur-[120px] pointer-events-none z-[2]" />
       <div className="absolute top-1/2 left-10 w-[500px] h-[500px] bg-violet-600/20 rounded-full blur-[120px] pointer-events-none z-[2]" /> */}
 
@@ -104,7 +95,7 @@ export default function HeroSection() {
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-500">Cinematic FX School</span>
         </h1>
 
-        <p className="hero-subtitle max-w-2xl mx-auto text-sm sm:text-base md:text-lg lg:text-xl text-slate-300 mb-8 sm:mb-10 px-2">
+        <p className="hero-subtitle max-w-2xl mx-auto text-sm sm:text-base font-medium md:text-lg lg:text-xl text-slate-400 mb-8 sm:mb-10 px-2">
           Learn elite animation techniques from industry pros. Whether you are a beginner or a seasoned designer, take your skills to the next level.
         </p>
 

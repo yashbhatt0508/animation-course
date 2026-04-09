@@ -1,6 +1,7 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
-import { CheckCircle, Loader2, Lock } from "lucide-react";
+import { CheckCircle, Loader2, Lock, Check } from "lucide-react";
 import { gsap } from 'gsap';
+import { useEnrollment } from '../context/EnrollmentContext';
 
 const COURSES = [
   { id: "houdini", name: "Houdini Animation", type: "Live Classes", price: "₹44,999" },
@@ -11,12 +12,13 @@ const COURSES = [
 
 export default function EnrollNow() {
   const containerRef = useRef(null);
+  const { addEnrollment } = useEnrollment();
 
   const [formData, setFormData] = useState({
     firstName: '', lastName: '', email: '', phone: '', gender: ''
   });
 
-  const [selectedCourse, setSelectedCourse] = useState("");
+  const [selectedCourses, setSelectedCourses] = useState([]);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -61,8 +63,8 @@ export default function EnrollNow() {
       newErrors.phone = "Enter a valid 10-digit number";
     }
 
-    if (!selectedCourse) {
-      newErrors.course = "Please select a course";
+    if (!selectedCourses.length) {
+      newErrors.course = "Please select at least one course";
     }
 
     setErrors(newErrors);
@@ -75,6 +77,12 @@ export default function EnrollNow() {
     setIsSubmitting(true);
 
     setTimeout(() => {
+      // Add enrollments for each selected course
+      const userName = `${formData.firstName} ${formData.lastName}`;
+      selectedCourses.forEach(courseId => {
+        addEnrollment(courseId, userName, formData.email);
+      });
+
       setIsSubmitting(false);
       setIsSuccess(true);
     }, 1500);
@@ -120,9 +128,9 @@ export default function EnrollNow() {
                 </p>
 
                 <p className="text-slate-300">
-                  <span className="text-slate-500">Course:</span>{" "}
+                  <span className="text-slate-500">Courses:</span>{" "}
                   <span className="text-violet-400 font-semibold">
-                    {COURSES.find(c => c.id === selectedCourse)?.name}
+                    {selectedCourses.map(id => COURSES.find(c => c.id === id)?.name).join(", ")}
                   </span>
                 </p>
 
@@ -206,18 +214,27 @@ export default function EnrollNow() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                   {COURSES.map(course => {
-                    const isSelected = selectedCourse === course.id;
+                    const isSelected = selectedCourses.includes(course.id);
 
                     return (
                       <div
                         key={course.id}
-                        onClick={() => setSelectedCourse(course.id)}
-                        className={`cursor-pointer p-5 rounded-xl border transition-all ${
+                        onClick={() => {
+                          setSelectedCourses(prev =>
+                            prev.includes(course.id)
+                              ? prev.filter(id => id !== course.id)
+                              : [...prev, course.id]
+                          );
+                        }}
+                        className={`cursor-pointer p-5 rounded-xl border transition-all relative ${
                           isSelected
                             ? "border-violet-500 bg-violet-500/10"
                             : "border-white/10 bg-white/5 hover:border-white/30"
                         }`}
                       >
+                        {isSelected && (
+                          <Check className="absolute top-2 right-2 w-5 h-5 text-violet-400" />
+                        )}
                         <h3 className="font-semibold text-white">
                           {course.name}
                         </h3>
@@ -248,7 +265,7 @@ export default function EnrollNow() {
                 {isSubmitting ? (
                   <Loader2 className="animate-spin mx-auto" />
                 ) : (
-                  "Enroll Now →"
+                  "Submit →"
                 )}
               </button>
 

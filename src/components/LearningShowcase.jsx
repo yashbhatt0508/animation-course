@@ -93,8 +93,10 @@ export default function CinematicCourseSection() {
                             }}
                         />
 
-                        {/* OVERLAY */}
-                        {/* <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/80" /> */}
+                        {/* 🔥 PREMIUM OVERLAY */}
+<div className="absolute inset-0 z-[1] 
+  bg-gradient-to-b from-black/20 via-black/40 to-black/80
+" />
 
                         {/* CONTENT */}
                         <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 py-8 sm:py-12">
@@ -103,7 +105,7 @@ export default function CinematicCourseSection() {
                                 {item.title}
                             </h2>
 
-                            <p className="max-w-xl text-xs sm:text-sm md:text-base lg:text-lg text-gray-300 px-2">
+                            <p className="max-w-xl text-xs sm:text-sm md:text-base font-bold lg:text-lg text-gray-400 px-2">
                                 {item.desc}
                             </p>
 

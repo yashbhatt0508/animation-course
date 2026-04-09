@@ -52,6 +52,7 @@ export default function Navbar() {
     { name: "Courses", path: "/courses" },
     // { name: "Pricing", path: "/pricing" },
     { name: "Community", path: "/community" },
+    { name: "Contact Us", path: "/contact" },
     { name: "Enroll Now", path: "/enroll" }
   ];
 
@@ -79,7 +80,7 @@ export default function Navbar() {
             <div className="hidden md:block">
               <div className="flex items-baseline space-x-8">
                 {navLinks.map((link) => (
-                  <Link key={link.name} to={link.path} className="hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  <Link key={link.name} to={link.path} className="hover:text-blue-400 px-3 py-2 rounded-md text-base font-medium transition-colors">
                     {link.name}
                   </Link>
                 ))}
@@ -109,10 +110,10 @@ export default function Navbar() {
               >
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="bg-slate-950 rounded-full px-[1.4rem] py-[0.52rem] flex items-center gap-[0.5rem] font-[700] text-[0.8rem] tracking-[0.06em] text-slate-50 transition-colors duration-250 border-none outline-none group-hover:bg-transparent group-hover:text-white cursor-pointer w-full"
-                  style={{ fontFamily: 'var(--font-heading), var(--font-body)' }}
+                  className="bg-slate-950 rounded-full px-5 py-2.5 flex items-center gap-2 font-semibold text-base tracking-[0.04em] text-white transition-colors duration-250 border-none outline-none group-hover:bg-transparent group-hover:text-white cursor-pointer w-full"
+                  style={{ fontFamily: 'Arial, sans-serif' }}
                 >
-                  <User className="w-[14px] h-[14px] text-violet-500 group-hover:text-white transition-colors duration-250" style={{ color: 'var(--accent, #8b5cf6)' }} /> Sign In
+                  <User className="w-5 h-5 text-violet-500 group-hover:text-white transition-colors duration-250 " style={{ color: 'var(--accent, #8b5cf6)' }} /> Sign In
                 </button>
               </div>
             </div>
@@ -142,7 +143,7 @@ export default function Navbar() {
                     key={link.name}
                     to={link.path}
                     onClick={() => setIsOpen(false)}
-                    className="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-700/50"
+                    className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-700/50"
                   >
                     {link.name}
                   </Link>
@@ -152,7 +153,7 @@ export default function Navbar() {
                     setIsOpen(false);
                     setIsModalOpen(true);
                   }}
-                  className="w-full text-center mt-4 bg-violet-600 hover:bg-violet-500 text-white px-3 py-2 rounded-md font-medium transition-colors"
+                  className="w-full text-center mt-4 bg-violet-600 hover:bg-violet-500 text-white px-3 py-3 rounded-md font-medium transition-colors"
                 >
                   Sign In
                 </button>
@@ -247,3 +248,4 @@ export default function Navbar() {
     </>
   );
 }
+

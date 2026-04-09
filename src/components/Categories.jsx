@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MonitorPlay, Layers, Video, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,28 +9,28 @@ const categories = [
   {
     id: 1,
     title: 'Houdini Animation',
-    icon: <MonitorPlay className="w-8 h-8 text-blue-400" />,
+    icon: "/houd.png",
     link: "/course/houdini-animation",
     video: "/videos/curtain.mp4"
   },
   {
     id: 2,
     title: 'Nuke Compositing',
-    icon: <Layers className="w-8 h-8 text-violet-400" />,
+    icon: "/foundary-nuke.png",
     link: "/course/nuke",
     video: "/videos/dhamaka2.mp4"
   },
   {
     id: 3,
     title: 'After Effects',
-    icon: <Video className="w-8 h-8 text-emerald-400" />,
+    icon: "/animate1.png",
     link: "/course/blender",
     video: "/videos/particle.mp4"
   },
   {
     id: 4,
     title: 'PhotoShop',
-    icon: <Zap className="w-8 h-8 text-amber-400" />,
+    icon: "/photoshop1.png",
     link: "/course/unreal",
     video: "/videos/river.mp4"
   }
@@ -42,6 +41,7 @@ export default function Categories() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
+
       gsap.fromTo(
         '.sect-title',
         { clipPath: "inset(100% 0 0 0)" },
@@ -71,6 +71,7 @@ export default function Categories() {
           }
         }
       );
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -94,40 +95,55 @@ export default function Categories() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
 
           {categories.map((cat) => (
-<Link
-  key={cat.id}
-  to={cat.link}
-  className="group relative category-card min-h-[180px] sm:min-h-[200px] md:h-[220px] lg:h-[240px] rounded-2xl overflow-hidden border border-white/10 hover:border-violet-500/40 transition-all duration-300 bg-white/5 backdrop-blur-lg"
->
+            <Link
+              key={cat.id}
+              to={cat.link}
+              className="group relative category-card min-h-[180px] sm:min-h-[200px] md:h-[220px] lg:h-[240px] rounded-2xl overflow-hidden border border-white/10 hover:border-violet-500/40 transition-all duration-300 bg-white/5 backdrop-blur-lg"
+            >
 
-  {/* DEFAULT CONTENT */}
-  <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 sm:p-6 md:p-8 transition duration-300 group-hover:opacity-0">
+              {/* DEFAULT CONTENT */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4 sm:p-6 md:p-8 transition duration-300 group-hover:opacity-0">
 
-    <div className="mb-2 sm:mb-3 md:mb-4 bg-white/5 p-3 sm:p-4 rounded-full group-hover:scale-110 transition">
-      {cat.icon}
-    </div>
+                {/* ICON */}
+                <div className="mb-4 flex items-center justify-center">
+                  <img
+                    src={cat.icon}
+                    alt={cat.title}
+                    className="
+                      w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 
+                      object-contain 
+                      mix-blend-lighten 
+                      group-hover:scale-110 
+                      transition duration-300
+                    "
+                  />
+                </div>
 
-    <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-100">
-      {cat.title}
-    </h3>
+                {/* 🔥 COURSE TITLE (FIXED) */}
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-white tracking-wide">
+                  {cat.title}
+                </h3>
 
-  </div>
+              </div>
 
-  {/* VIDEO LAYER */}
-  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300">
+              {/* VIDEO LAYER */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300">
 
-    <video
-      src={cat.video}
-      muted
-      loop
-      playsInline
-      autoPlay
-      className="w-full h-full object-cover"
-    />
+                <video
+                  src={cat.video}
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  className="w-full h-full object-cover"
+                />
 
-  </div>
+                {/* LIGHT OVERLAY */}
+                {/* <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" /> */}
 
-</Link>
+              </div>
+
+            </Link>
           ))}
 
         </div>

@@ -3,11 +3,18 @@ import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ChevronRight } from "lucide-react";
+import { useIsEnrolled } from "../hooks/useIsEnrolled";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Courses() {
   const containerRef = useRef(null);
+  
+  // Check enrollment status for each course
+  const isHoudiniEnrolled = useIsEnrolled('houdini');
+  const isNukeEnrolled = useIsEnrolled('nuke');
+  const isAfterEffectsEnrolled = useIsEnrolled('aftereffects');
+  const isPhotoshopEnrolled = useIsEnrolled('PhotoShop');
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -63,33 +70,37 @@ export default function Courses() {
       type: "LIVE CLASSES",
       desc: "Master cinematic FX, pyro, water and destruction with live mentorship.",
       price: "₹44,999",
-      link: "/course/houdini-animation",
+      link: isHoudiniEnrolled ? "/courses/houdini" : "/courses/houdini-animation",
       video: "/videos/all.mp4",
       highlight: true,
+      courseId: "houdini",
     },
     {
       title: "After Effects",
       type: "RECORDED",
-      desc: "Industry-level compositing and VFX integration.",
+      desc: "Master motion graphics, compositing, and visual effects.",
       price: "₹7,999",
-      link: "/course/blender",
+      link: isAfterEffectsEnrolled ? "/course/blender" : "/course/blender",
       video: "/videos/03.mp4",
+      courseId: "aftereffects",
     },
     {
       title: "Nuke Compositing",
       type: "RECORDED",
-      desc: "Learn compositing, lighting and rendering workflows.",
+      desc: "Industry-standard VFX compositing and color grading.",
       price: "₹15,999",
       link: "/course/nuke",
       video: "/videos/dhamaka2.mp4",
+      courseId: "nuke",
     },
     {
       title: "Photoshop",
       type: "RECORDED",
-      desc: "Create cinematic environments and effects.",
+      desc: "Professional retouching and digital art mastery.",
       price: "₹6,999",
-      link: "/course/unreal",
+      link: isPhotoshopEnrolled ? "/course/unreal" : "/course/unreal",
       video: "/videos/particle.mp4",
+      courseId: "PhotoShop",
     },
   ];
 
@@ -122,7 +133,13 @@ export default function Courses() {
                       : "border-white/10 bg-white/5 hover:bg-white/10")
                   }
                 >
-                  <span className="text-xs px-3 py-1 rounded-full mb-4 inline-block bg-white/10 text-slate-300">
+                  <span className={
+                    course.type === "LIVE CLASSES"
+                      ? "text-lg px-3 py-1 rounded-full mb-4 inline-block bg-red-500/20 text-red-400 font-bold animate-pulse"
+                      : course.type === "RECORDED"
+                      ? "text-xs px-3 py-1 rounded-full mb-4 inline-block bg-indigo-500/20 text-indigo-400 font-bold"
+                      : "text-xs px-3 py-1 rounded-full mb-4 inline-block bg-white/10 text-slate-300"
+                  }>
                     {course.type}
                   </span>
 
@@ -152,55 +169,64 @@ export default function Courses() {
 
       {/* ================= DESKTOP CINEMATIC ================= */}
       <div className="hidden lg:block snap-y snap-mandatory">
-
+  
         {courses.map((course, i) => (
-          <section
-            key={i}
-            className="cinematic-section h-screen snap-start relative flex items-center justify-center"
-          >
+         <section
+  key={i}
+  className="cinematic-section h-screen snap-start relative flex items-center justify-center overflow-hidden"
+>
 
-            {/* VIDEO */}
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute w-full h-full object-cover scale-110"
-            >
-              <source src={course.video} type="video/mp4" />
-            </video>
+  {/* VIDEO */}
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="absolute top-0 left-0 w-full h-full object-cover scale-110"
+  >
+    <source src={course.video} type="video/mp4" />
+  </video>
 
-            {/* DARK OVERLAY */}
-            {/* <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" /> */}
+  {/* 🔥 FIXED PREMIUM OVERLAY */}
+  <div className="absolute top-0 left-0 w-full h-full z-10 
+    bg-gradient-to-b from-black/30 via-black/50 to-black/50 
+    backdrop-blur-sm"
+  />
 
-            {/* CONTENT */}
-            <div className="content relative z-10 text-center max-w-3xl px-6">
+  {/* CONTENT */}
+  <div className="content relative z-20 text-center max-w-3xl px-6">
 
-              <span className="text-xs px-4 py-1 rounded-full bg-white/10 text-slate-300 inline-block mb-4">
-                {course.type}
-              </span>
+    <span className={
+      course.type === "LIVE CLASSES"
+        ? "text-lg px-4 py-1 rounded-full bg-red-500/20 text-red-400 inline-block mb-4 font-bold animate-pulse"
+        : course.type === "RECORDED"
+        ? "text-xs px-4 py-1 rounded-full bg-indigo-500/20 text-indigo-400 inline-block mb-4 font-bold"
+        : "text-xs px-4 py-1 rounded-full bg-white/10 text-slate-300 inline-block mb-4"
+    }>
+      {course.type}
+    </span>
 
-              <h1 className="text-5xl md:text-6xl font-bold mb-4">
-                {course.title}
-              </h1>
+    <h1 className="text-5xl md:text-6xl font-bold mb-4">
+      {course.title}
+    </h1>
 
-              <p className="text-slate-300 text-lg mb-6">
-                {course.desc}
-              </p>
+    <p className="text-slate-300 text-lg mb-6">
+      {course.desc}
+    </p>
 
-              <p className="text-3xl font-bold text-violet-400 mb-8">
-                {course.price}
-              </p>
+    <p className="text-3xl font-bold text-violet-400 mb-8">
+      {course.price}
+    </p>
 
-              <Link
-                to={course.link}
-                className="inline-flex items-center gap-2 px-10 py-4 bg-violet-600 hover:bg-violet-500 transition-all duration-300 hover:scale-105 rounded-lg font-semibold shadow-lg"
-              >
-                View Course <ChevronRight size={18} />
-              </Link>
+    <Link
+      to={course.link}
+      className="inline-flex items-center gap-2 px-10 py-4 bg-violet-600 hover:bg-violet-500 transition-all duration-300 hover:scale-105 rounded-lg font-semibold shadow-lg"
+    >
+      View Course <ChevronRight size={18} />
+    </Link>
 
-            </div>
-          </section>
+  </div>
+</section>
         ))}
 
       </div>
@@ -236,3 +262,8 @@ export default function Courses() {
     </div>
   );
 }
+
+
+
+
+      
